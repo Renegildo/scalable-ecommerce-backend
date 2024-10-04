@@ -1,0 +1,48 @@
+services:
+  nginx:
+    build: ./nginx
+    ports:
+      - "80:80"
+    depends_on:
+      - cart-service
+      - notification-service
+      - order-service
+      - payment-service
+      - product-service
+      - user-service
+  
+  cart-service:
+    build: ./cart-service
+    ports:
+      - "8080"
+    env_file: "./.env"
+
+  notification-service:
+    build: ./notification-service
+    ports:
+      - "8080"
+    env_file: "./.env"
+
+  order-service:
+    build: ./order-service
+    ports:
+      - "8080"
+    env_file: "./.env"
+
+  payment-service:
+    build: ./payment-service
+    ports:
+      - "8080"
+    env_file: "./.env"
+
+  product-service:
+    build: ./product-service
+    ports:
+      - "8080"
+    env_file: "./.env"
+
+  user-service:
+    build: ./user-service
+    ports:
+      - "8080"
+    env_file: "./.env"

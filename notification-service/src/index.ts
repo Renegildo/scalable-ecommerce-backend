@@ -1,6 +1,6 @@
 import express from "express";
 import dotenv from "dotenv";
-dotenv.config();
+dotenv.config({ path: "../../.env" });
 
 const port = process.env.PORT ? Number(process.env.PORT) : 8080;
 const app = express();
