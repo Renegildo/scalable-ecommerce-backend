@@ -10,39 +10,111 @@ services:
       - payment-service
       - product-service
       - user-service
+
+  cart-db:
+    image: postgres:latest
+    env_file: "./cart-db.env"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  notification-db:
+    image: postgres:latest
+    env_file: "./notification-db.env"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  order-db:
+    image: postgres:latest
+    env_file: "./order-db.env"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  payment-db:
+    image: postgres:latest
+    env_file: "./payment-db.env"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  product-db:
+    image: postgres:latest
+    env_file: "./product-db.env"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  user-db:
+    image: postgres:latest
+    env_file: "./user-db.env"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
   
   cart-service:
     build: ./cart-service
     ports:
-      - "8080"
+      - "8080:8080"
     env_file: "./.env"
+    depends_on:
+      cart-db:
+        condition: service_healthy
 
   notification-service:
     build: ./notification-service
     ports:
-      - "8080"
+      - "8081:8080"
     env_file: "./.env"
+    depends_on:
+      notification-db:
+        condition: service_healthy
 
   order-service:
     build: ./order-service
     ports:
-      - "8080"
+      - "8082:8080"
     env_file: "./.env"
+    depends_on:
+      order-db:
+        condition: service_healthy
 
   payment-service:
     build: ./payment-service
     ports:
-      - "8080"
+      - "8083:8080"
     env_file: "./.env"
+    depends_on:
+      payment-db:
+        condition: service_healthy
 
   product-service:
     build: ./product-service
     ports:
-      - "8080"
+      - "8084:8080"
     env_file: "./.env"
+    depends_on:
+      product-db:
+        condition: service_healthy
 
   user-service:
     build: ./user-service
     ports:
-      - "8080"
+      - "8085:8080"
     env_file: "./.env"
+    depends_on:
+      user-db:
+        condition: service_healthy
